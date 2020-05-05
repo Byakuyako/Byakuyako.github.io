@@ -2,14 +2,15 @@
 <html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>画板</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <canvas id="canvas"> </canvas>
+  <canvas id="canvas" width="400" height="300"> </canvas>
   <script>
     let canvas = document.getElementById("canvas");
     canvas.width = document.documentElement.clientWidth;
@@ -17,36 +18,69 @@
     let ctx = canvas.getContext("2d");
     let painting = false
 
-
+    // 控制线条连接样式
     ctx.fillStyle = "black";
     ctx.strokeStyle = 'none'
+    ctx.lineWidth = 5
+    ctx.lineCap = "round"
 
     let x = 0
     let y = 0
 
-    canvas.onmousedown = (e) => {
-      painting = true
-      console.log(e)
-      x = e.clientX
-      y = e.clientY
+    function drawLine(x1, y1, x2, y2) {
+      ctx.beginPath()
+      ctx.moveTo(x1, y1)
+      ctx.lineTo(x2, y2)
+      ctx.stroke()
     }
 
-    canvas.onmousemove = (e) => {
-      if (painting === true) {
-        console.log(e.clientX)
-        console.log(e.clientY)
-        ctx.beginPath();
 
-        ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.fill();
-      } else {
-        console.log('什么都不做')
+    let isTouchDevice = 'ontouchstart' in document.documentElement
+    console.log(isTouchDevice)
+
+    if (isTouchDevice) {
+      canvas.ontouchstart = (e) => {
+        painting = true
+        // console.log(e)
+        x = e.touches[0].clientX
+        y = e.touches[0].clientY
       }
-    }
 
-    canvas.onmouseup = () => {
-      painting = false
+      canvas.ontouchmove = (e) => {
+        // console.log(e.touches[0].clientX)
+        // console.log(e.touches[0].clientY)
+        drawLine(x, y, e.touches[0].clientX, e.touches[0].clientY)
+        x = e.touches[0].clientX
+        y = e.touches[0].clientY
+      }
+
+      canvas.ontouchend = () => {
+        painting = false
+      }
+
+    } else {
+      canvas.onmousedown = (e) => {
+        painting = true
+        console.log(e)
+        x = e.clientX
+        y = e.clientY
+      }
+
+      canvas.onmousemove = (e) => {
+        if (painting === true) {
+          // console.log(e.clientX)
+          // console.log(e.clientY)
+          drawLine(x, y, e.clientX, e.clientY)
+          x = e.clientX
+          y = e.clientY
+        } else {
+          console.log('什么都不做')
+        }
+      }
+
+      canvas.onmouseup = () => {
+        painting = false
+      }
     }
   </script>
 </body>
