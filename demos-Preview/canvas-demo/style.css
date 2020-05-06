@@ -4,9 +4,13 @@
     box-sizing: border-box;
 }
 
+/* body {
+    overflow: hidden;
+} */
+
+
 #canvas {
     display: block;
-    border: 1px solid red;
-    top: 0;
-    left: 0;
+    /* border: 1px solid red; */
+
 }
