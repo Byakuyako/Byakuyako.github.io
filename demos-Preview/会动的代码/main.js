@@ -1,5 +1,5 @@
-let html = document.querySelector('#html')
-let style = document.querySelector('#style')
+let html = document.querySelector("#html");
+let style = document.querySelector("#style");
 
 let string = `
 /*
@@ -53,32 +53,31 @@ let string = `
 }
 
 /*这样一个太极图就画出来啦*/
-`
+`;
 
-let string2 = ''
-let n = 0
+let string2 = "";
+let n = 0;
 
 let step = () => {
     setTimeout(() => {
-        if (string[n] === '\n') {
-            string2 += '<br>' //处理换行符
-        } else if (string[n] === ' ') {
-            string2 += '&nbsp' //处理空格
+        if (string[n] === "\n") {
+            string2 += "<br>"; //处理换行符
+        } else if (string[n] === " ") {
+            string2 += "&nbsp"; //处理空格
         } else {
-            string2 += string[n]
+            string2 += string[n];
         }
 
-        html.innerHTML = string2
-        style.innerHTML = string.substring(0, n) //追加文本
-        window.scrollTo(0, 2000)
-        html.scrollTo(0, 2000)
+        html.innerHTML = string2;
+        style.innerHTML = string.substring(0, n); //追加文本
+        window.scrollTo(0, 2000);
+        html.scrollTo(0, 2000);
 
         if (n < string.length - 1) {
-            n++
-            step()
+            n++;
+            step();
         }
+    }, 40);
+};
 
-    }, 50)
-}
-
-step()
+step();
