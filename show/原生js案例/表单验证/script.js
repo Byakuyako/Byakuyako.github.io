@@ -7,7 +7,7 @@ const password = document.getElementById('password')
 const password2 = document.getElementById('password2')
 
 
-//输入处理函数
+//结果显示函数
 function showError(input, message){
   const formControl = input.parentElement
   formControl.className = 'form-control error'
@@ -26,44 +26,26 @@ function isValidEmail(email){
   return re.test(String(email))
 }
 
+//提取控件关键字
+function getKeywords(input){
+  return input.placeholder.slice(3)
+}
+
+//校验输入内容
+function checkRequired(inputArr){
+  inputArr.forEach(function (input) {
+    // console.log(input.value)
+    if (input.value.trim() === '') {  //用trim()方法去除字符串首尾空格
+      showError(input, `${getKeywords(input)}为必填项`)
+    } else {
+      showSuccess(input)
+    }
+  })
+}
+
 //添加事件监听
 form.addEventListener('submit', function(e){
   e.preventDefault()
-  // console.log(username.value)
-  if(username.value === ''){
-    showError(username, '用户名为必填项')
-    console.log(1)
-  }else{
-    showSuccess(username)
-    console.log(2)
-  }
 
-  if(email.value === ''){
-    showError(email, '邮箱为必填项')
-    console.log(1)
-  }else if (!isValidEmail(email.value)){
-    showError(email, '邮箱格式错误')
-    console.log(2)
-  }else{
-    showSuccess(email)
-
-  }
-
-  if(password.value === ''){
-    showError(password, '密码为必填项')
-    console.log(1)
-  }else{
-    showSuccess(password)
-    console.log(2)
-  }
-
-  if(password2.value === ''){
-    showError(password2, '确认密码为必填项')
-    console.log(1)
-  }else{
-    showSuccess(password2)
-    console.log(2)
-  }
+  checkRequired([username, email, password, password2])
 })
-
-// console.log(form)
