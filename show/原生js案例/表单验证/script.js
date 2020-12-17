@@ -20,10 +20,16 @@ function showSuccess(input){
   formControl.className = 'form-control success'
 }
 
-//邮箱验证正则
-function isValidEmail(email){
+//邮箱校验
+function checkEmail(input){
   const re = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-  return re.test(String(email))
+  // return re.test(String(email))
+  // const result = re.test(String(email))
+  if (re.test(input.value.trim())) {
+    showSuccess(input)
+  } else {
+    showError(input, '邮箱格式错误')
+  }
 }
 
 //提取控件关键字
@@ -43,9 +49,30 @@ function checkRequired(inputArr){
   })
 }
 
+//字符长度校验
+function checkLength(input, min, max) {
+  if (input.value.length < min){
+    showError(input, `${getKeywords(input)}至少${min}个字符`)
+  } else if (input.value.length > max){
+    showError(input, `${getKeywords(input)}至多${max}个字符`)
+  } else {
+    showSuccess(input)
+  }
+}
+
+//验证密码匹配
+function checkPasswordMatch(input1, input2){
+  if (input1.value !== input2.value){
+    showError(input2, '密码不匹配')
+  }
+}
+
 //添加事件监听
 form.addEventListener('submit', function(e){
   e.preventDefault()
-
   checkRequired([username, email, password, password2])
+  checkLength(username, 3, 15)
+  checkLength(password, 6, 12)
+  checkEmail(email)
+  checkPasswordMatch(password, password2)
 })
