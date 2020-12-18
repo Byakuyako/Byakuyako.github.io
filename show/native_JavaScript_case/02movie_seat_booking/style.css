@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #242333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.movie-container {
+  margin: 20px 0;
+}
+
+.movie-container select {
+  background-color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 5px 15px;
+  /*以下是对于苹果系统的设置, 不设置的话padding会没有效果*/
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.seat {
+  height: 12px;
+  width: 15px;
+  background-color: #444451;
+  margin: 3px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.seat.selected {
+  background-color: #6feaf6;
+}
+
+.seat.occupied {
+  background-color: #fff;
+}
+
+/*选中从前往后第2个*/
+.seat:nth-of-type(2) {
+  margin-right: 18px;
+}
+
+/*选中从后往前第二个*/
+.seat:nth-last-of-type(2) {
+  margin-left: 18px;
+}
+
+/*可选和已选都有鼠标移入动画, 这里用:not()把 .occupied去除掉*/
+.container .seat:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+/*.seat:not(.occupied) {*/
+/*  transition: all 0.2s ease;*/
+/*}*/
+
+.showcase {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.showcase li small {
+  margin-left: 2px;
+}
+
+
+.container {
+  /*添加视距*/
+  perspective: 1000px;
+  margin-bottom: 10px;
+}
+
+.screen {
+  background-color: #fff;
+  height: 70px;
+  width: 100%;
+  margin: 15px 0;
+  transform: rotateX(-45deg); /*在父元素中添加视距才能看到3D效果*/
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+}
+
+.row {
+  display: flex;
+}
+
+.text {
+  margin: 5px 0;
+}
+
+.text span {
+  color: #6feaf6;
+}
