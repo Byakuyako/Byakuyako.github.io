@@ -8,15 +8,28 @@ let ticketPrice = +movieSelect.value
 
 //更新座位数及总票价
 function updateSelectedCount(){
+  //获取已选座位的数组
   const selectedSeats = document.querySelectorAll('.row .seat.selected')
+  //map()方法会像forEach()那样遍历一个数组, 然后对每项处理后返回一个新的数组
+  const seatsIndex = [...selectedSeats].map(seat => [...seats].indexOf(seat))
+
+  localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex))
+
   const selectedSeatsCount = selectedSeats.length
   count.innerText = selectedSeatsCount.toString()
   total.innerText = (selectedSeatsCount * ticketPrice).toString()
 }
 
+//保存电影索引值和票价
+function setMovieData(movieIndex, moviePrice){
+  localStorage.setItem('SelectedMovieIndex', movieIndex)
+  localStorage.setItem('selectedMoviePrice', moviePrice)
+}
+
 //监听电影下拉框
 movieSelect. addEventListener('change', e => {
-  ticketPrice = e.target.value
+  ticketPrice = +e.target.value
+  setMovieData(e.target.selectedIndex, e.target.value)
   updateSelectedCount()
 })
 
